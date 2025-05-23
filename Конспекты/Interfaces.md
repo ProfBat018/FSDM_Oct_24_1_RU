@@ -217,3 +217,245 @@ class MyCollection : IEnumerable<int>
     }
 }
 ```
+
+Давайте для примера IEnumerable рассмотрим коллекции которые есть в `.NET`:
+
+- `List<T>` - представляет собой изменяемый список объектов.
+- `Dictionary<TKey, TValue>` - представляет собой коллекцию пар ключ-значение.
+- `HashSet<T>` - представляет собой коллекцию уникальных элементов.
+- `Queue<T>` - представляет собой очередь, которая работает по принципу "первый пришел - первый вышел".
+- `Stack<T>` - представляет собой стек, который работает по принципу "последний пришел - первый вышел".
+- `LinkedList<T>` - представляет собой двусвязный список.
+- `ArrayList` - представляет собой изменяемый массив объектов.
+- `SortedList<TKey, TValue>` - представляет собой коллекцию пар ключ-значение, отсортированных по ключу.
+- `SortedSet<T>` - представляет собой коллекцию уникальных элементов, отсортированных по возрастанию.
+- `SortedDictionary<TKey, TValue>` - представляет собой коллекцию пар ключ-значение, отсортированных по ключу.
+- `ObservableCollection<T>` - представляет собой коллекцию, которая уведомляет об изменениях в коллекции.
+
+При чем стоит отметить что по умолчанию все массивы в C# тоже являются `IEnumerable`.
+
+По началу типу `SortedList` и `SortedDictionary` могут показаться одинаковыми, но на самом деле они отличаются. `List` выступает как обычный массив, а `Dictionary` в качестве бинарного дерева.
+
+![](./dictionarybenchmark.png)
+
+## `ICloneable` - интерфейс, который определяет метод Clone для создания копии объекта. Он позволяет создавать поверхностные и глубокие копии объектов. Поверхностная копия создает новый объект, но не копирует вложенные объекты. Глубокая копия создает новый объект и копирует все вложенные объекты.
+
+
+Зачем мне метод Clone в интерфейсе, если я могу сам написать метод Clone в класее ? Ответ на этот вопрос кроется не в клонировании а работе самих интерфейсов. Дело в том что при использовании интерфеса вы обязаны имплементировать этот метод, соответственно это дает гарантию того что объект может быть склонирован. Если у вас есть сервис который работает с несколькими объектами, то вы не буджете принимать обычные классы, а будете принимать интерфейсы. Соответственно вы можете быть уверены что у вас есть метод Clone, который вы можете использовать в своем сервисе. Вот пример: 
+
+```csharp
+
+
+Pc a = new()
+{
+    Name = "My PC",
+    Components = new List<PcComponent>
+    {
+        new Cpu
+        {
+            Name = "Intel Core i7",
+            Description = "High performance CPU",
+            Socket = "LGA 1151",
+            Cores = 8,
+            Threads = 16,
+            BaseClock = 3.6,
+            BoostClock = 4.9
+        },
+        new Gpu
+        {
+            Name = "NVIDIA GeForce RTX 3080",
+            Description = "High performance GPU",
+            MemoryType = "GDDR6X",
+            MemorySize = 10,
+            CudaCores = 8704,
+            BaseClock = 1440,
+            BoostClock = 1710
+        },
+        new Motherboard
+        {
+            Name = "ASUS ROG Strix Z490-E",
+            Description = "High performance motherboard",
+            Socket = "LGA 1200",
+            RamSlots = 4,
+            MaxRam = 128,
+            FormFactor = "ATX"
+        }
+    }
+};
+Pc b = a.Clone() as Pc;
+
+b.Name = "My PC Clone";
+b.Components[1].Name = "NVIDIA GeForce RTX 3090";
+Console.WriteLine(a);
+Console.WriteLine(b);
+
+class Pc : ICloneable
+{
+    public Guid Id { get; set; } = Guid.NewGuid();
+    public string Name { get; set; }
+    public List<PcComponent> Components { get; set; }
+    public object Clone()
+    {
+        var clonedComponents =  new List<PcComponent>();
+
+        foreach (var component in Components)
+        {
+            clonedComponents.Add(component.Clone() as PcComponent);
+        }
+
+        return new Pc()
+        {
+            Id = Guid.NewGuid(),
+            Name = this.Name,
+            Components = clonedComponents
+        };
+    }
+
+    public override string ToString()
+    {
+        return $"ID: {Id}\n\tName: {Name}\n\tComponents: {string.Join(", ", Components.Select(c => c.Name))}";
+    }
+}
+
+class PcComponent : ICloneable
+{
+    public Guid Id { get; set; }
+    public string Name { get; set; }
+    public string Description { get; set; }
+    public object Clone()
+    {
+        return new PcComponent
+        {
+            Id = Guid.NewGuid(),
+            Name = this.Name,
+            Description = this.Description
+        };
+    }
+}
+
+class Cpu : PcComponent, ICloneable
+{
+    public string Socket { get; set; }
+    public int Cores { get; set; }
+    public int Threads { get; set; }
+    public double BaseClock { get; set; }
+    public double BoostClock { get; set; }
+    
+    public object Clone()
+    {
+        return new Cpu
+        {
+            Id = Guid.NewGuid(),
+            Name = this.Name,
+            Description = this.Description,
+            Socket = this.Socket,
+            Cores = this.Cores,
+            Threads = this.Threads,
+            BaseClock = this.BaseClock,
+            BoostClock = this.BoostClock
+        };
+    }
+}
+
+class Gpu : PcComponent, ICloneable
+{
+    public string MemoryType { get; set; }
+    public int MemorySize { get; set; }
+    public int CudaCores { get; set; }
+    public double BaseClock { get; set; }
+    public double BoostClock { get; set; }
+    
+    public object Clone()
+    {
+        return new Gpu
+        {
+            Id = Guid.NewGuid(),
+            Name = this.Name,
+            Description = this.Description,
+            MemoryType = this.MemoryType,
+            MemorySize = this.MemorySize,
+            CudaCores = this.CudaCores,
+            BaseClock = this.BaseClock,
+            BoostClock = this.BoostClock
+        };
+    }
+}
+
+class Motherboard : PcComponent, ICloneable
+{
+    public string Socket { get; set; }
+    public int RamSlots { get; set; }
+    public int MaxRam { get; set; }
+    public string FormFactor { get; set; }
+    
+    public object Clone()
+    {
+        return new Motherboard
+        {
+            Id = Guid.NewGuid(),
+            Name = this.Name,
+            Description = this.Description,
+            Socket = this.Socket,
+            RamSlots = this.RamSlots,
+            MaxRam = this.MaxRam,
+            FormFactor = this.FormFactor
+        };
+    }
+}
+```
+
+`IEquatable` - интерфейс, который определяет метод Equals для сравнения объектов на равенство. Он позволяет сравнивать объекты одного типа и определять их равенство. Например, вы можете использовать его для сравнения объектов в коллекциях.
+
+Сразу перейдем к разнице между `Equals()` в `object` и `Equals()` в `IEquatable<T>`. 
+
+```csharp
+
+
+// class Person
+// {
+//     public override bool Equals(object? obj)
+//     {
+//         return base.Equals(obj);
+//     }
+// }
+
+
+using System.Security.AccessControl;
+
+Person a = new()
+{
+    Name = "Elvin",
+    Age = 23
+};
+
+Person b = new()
+{
+    Name = "Samir",
+    Age = 30
+};
+
+Console.WriteLine(a == b);
+
+class Person : IEquatable<Person>, IEquatable<int>
+{
+    public string Name { get; set; }
+    public int Age { get; set; }
+    public bool Equals(Person? other)
+    {
+        if (other is null) return false;
+        if (ReferenceEquals(this, other)) return true;
+        return Name == other.Name && Age == other.Age;
+    }
+
+    public bool Equals(int other)
+    {
+        if (other == 0) return false;
+        return Age == other;
+    }
+}
+```
+
+
+`ICollection` - интерфейс, который определяет методы для работы с коллекциями. Он позволяет добавлять, удалять и проверять наличие элементов в коллекции. Он является базовым интерфейсом для всех коллекций в .NET.
+
+```csharp
