@@ -9,6 +9,7 @@
 
     <ItemGroup>
       <PackageReference Include="NewtonSoft.Json" Version="13.0.3" />
+      <PackageReference Include="YAXLib" Version="4.3.0" />
     </ItemGroup>
 
     <ItemGroup>

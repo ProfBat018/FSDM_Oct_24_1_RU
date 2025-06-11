@@ -39,6 +39,7 @@ Console.WriteLine(person.Name);
 */
 #endregion
 
+/*
 // Атрибут, который обязательно нужен для бинарной сериализации
 [Serializable] 
 class Person
@@ -48,6 +49,6 @@ class Person
     public int Age { get; set; }
 }
 
-
+*/
 
 #endregion

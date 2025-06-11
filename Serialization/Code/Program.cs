@@ -386,5 +386,77 @@ class Person
 
 #endregion
 
+#region ExtendedXmlSerializer
+
+using System.Xml.Serialization;
+using Newtonsoft.Json;
+using YAXLib;
+
+// Person person = new()
+// {
+//     Name = "Elvin",
+//     Surname = "Azimov",
+//     Age = 23
+// };
+//
+//
+// YAXSerializer serializer = new(typeof(Person));
+// using FileStream fs = new("person.xml", FileMode.OpenOrCreate);
+//
+// serializer.SerializeToFile(person, "person.xml");
 
 
+/*
+YAXSerializer serializer = new(typeof(Person));
+
+var res = serializer.DeserializeFromFile("person.xml") as Person;
+
+if (res != null)
+{
+    Console.WriteLine($"Name: {res.Name}, Surname: {res.Surname}, Age: {res.Age}");
+}
+*/
+
+/*
+XmlSerializer serializer = new(typeof(Person));
+
+using FileStream fs = new("person.xml", FileMode.OpenOrCreate);
+
+var res = serializer.Deserialize(fs) as Person;
+
+if (res != null)
+{
+    Console.WriteLine($"Name: {res.Name}, Surname: {res.Surname}, Age: {res.Age}");
+}
+*/
+
+
+
+
+
+using FileStream fs = new("person.json", FileMode.OpenOrCreate);
+using StreamReader sr = new(fs);
+
+var res = System.Text.Json.JsonSerializer.Deserialize<Person>(sr.ReadToEnd());
+
+if (res != null)
+{
+    Console.WriteLine($"Name: {res.Name}, Surname: {res.Surname}, Age: {res.Age}");
+}
+
+
+
+public class Person
+{
+    public Person()
+    {
+        
+    }
+    public string Name { get; init; }
+    public string Surname { get; set; }
+    public int Age { get; set; }
+}
+
+
+
+#endregion
