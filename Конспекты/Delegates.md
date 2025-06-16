@@ -77,6 +77,8 @@ public void TestCovariance()
 
     del = GetDerived; // Используем метод, возвращающий Derived
     b = del(); // Возвращает Derived, но делегат все еще типа Base
+
+    Car c2 = del();
 }
 ```
 
