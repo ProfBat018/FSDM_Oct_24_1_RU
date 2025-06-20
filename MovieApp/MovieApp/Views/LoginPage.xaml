@@ -1,0 +1,56 @@
+﻿<UserControl x:Class="MovieApp.Views.LoginPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MovieApp.Views"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid Margin="150 50">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.5*"/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <StackPanel HorizontalAlignment="Left">
+                <Button Width="30" Height="30" Margin="5" Style="{StaticResource MaterialDesignFloatingActionButton}">
+                    <md:PackIcon Kind="ArrowBack"/>
+                </Button>
+            </StackPanel>
+
+            <TextBox  
+                Grid.Row="1"
+                Foreground="Black"
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                md:HintAssist.Hint="Email"
+                md:HintAssist.FloatingOffset="1,-42"/>
+
+            <TextBox  
+             Grid.Row="2"
+             Foreground="Black"
+             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+             md:HintAssist.Hint="Password"
+             md:HintAssist.FloatingOffset="1,-42"/>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="3">
+                <Button  Width="150">
+                    <md:PackIcon Kind="Login">
+                    </md:PackIcon>
+                </Button>
+
+                <Button  Style="{StaticResource MaterialDesignFlatSecondaryButton}"  Width="200">
+                    <StackPanel Orientation="Horizontal">
+                        <Label FontSize="10" Foreground="Yellow" Content="Don't have an account ?"/>
+                        <md:PackIcon VerticalAlignment="Center" Kind="Register">
+                        </md:PackIcon>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Grid>
+    </Grid>
+
+</UserControl>
