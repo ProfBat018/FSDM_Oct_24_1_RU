@@ -10,9 +10,7 @@ namespace MovieApp.Services.Abstractions;
 interface IDataService
 {
     public IEnumerable<T> GetAllData<T>() where T : IEntity;
-    public void AddData<T>() where T : IEntity;
-
- 
+    public void AddData<T>(T data) where T : IEntity;
 }
 
 

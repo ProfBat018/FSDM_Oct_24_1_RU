@@ -6,4 +6,9 @@ using System.Threading.Tasks;
 
 namespace MovieApp.DTOs.Requests;
 
-record RegisterRequest(string Email, string Password, string ConfirmPassword);
+public class RegisterRequest
+{
+    public string Email { get; set; } = "Elvin_123";
+    public string Password { get; set; } = "Elvin_1234";
+    public string ConfirmPassword { get; set; } = "Elvin_1234";
+}

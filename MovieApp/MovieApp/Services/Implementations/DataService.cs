@@ -16,10 +16,11 @@ class DataService : IDataService
 
     public void AddData<T>(T data) where T : IEntity
     {
+        List<T>? values = GetAllData<T>() as List<T>;
+
         using var fs = OpenOrCreateFile<T>();
         using StreamWriter sw = new(fs);
 
-        List<T>? values = GetAllData<T>() as List<T>;
 
         if (values == null)
         {

@@ -24,29 +24,32 @@
             </StackPanel>
 
             <TextBox  
-                Grid.Row="1"
-                Foreground="Black"
-                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                md:HintAssist.Hint="Email"
-                md:HintAssist.FloatingOffset="1,-42"/>
+                 Text="{Binding Register.Email}"
+                 Grid.Row="1"
+                 Foreground="Black"
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                 md:HintAssist.Hint="Email"
+                 md:HintAssist.FloatingOffset="1,-42"/>
 
             <TextBox  
-             Grid.Row="2"
-             Foreground="Black"
-             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-             md:HintAssist.Hint="Password"
-             md:HintAssist.FloatingOffset="1,-42"/>
+                 Text="{Binding Register.Password}"
+                 Grid.Row="2"
+                 Foreground="Black"
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                 md:HintAssist.Hint="Password"
+                 md:HintAssist.FloatingOffset="1,-42"/>
 
             <TextBox  
-             Grid.Row="3"
-             Foreground="Black"
-             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-             md:HintAssist.Hint="Confirm Password"
-             md:HintAssist.FloatingOffset="1,-42"/>
+                 Text="{Binding Register.ConfirmPassword}"
+                 Grid.Row="3"
+                 Foreground="Black"
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                 md:HintAssist.Hint="Confirm Password"
+                 md:HintAssist.FloatingOffset="1,-42"/>
 
 
 
-            <Button Grid.Row="4"  Width="150">
+            <Button Command="{Binding RegisterCommand}" Grid.Row="4"  Width="150">
                 <md:PackIcon Kind="Register">
                 </md:PackIcon>
             </Button>

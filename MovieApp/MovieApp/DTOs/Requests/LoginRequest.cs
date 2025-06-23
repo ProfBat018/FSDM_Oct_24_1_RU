@@ -4,6 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MovieApp.DTOs;
+namespace MovieApp.DTOs.Requests;
 
-record LoginRequest(string Username, string Password);
+public record LoginRequest(string Email, string Password);

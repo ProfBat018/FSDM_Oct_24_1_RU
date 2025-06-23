@@ -36,20 +36,11 @@
              md:HintAssist.Hint="Password"
              md:HintAssist.FloatingOffset="1,-42"/>
 
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="3">
-                <Button  Width="150">
+                <Button Grid.Row="3"  Width="150">
                     <md:PackIcon Kind="Login">
                     </md:PackIcon>
                 </Button>
 
-                <Button  Style="{StaticResource MaterialDesignFlatSecondaryButton}"  Width="200">
-                    <StackPanel Orientation="Horizontal">
-                        <Label FontSize="10" Foreground="Yellow" Content="Don't have an account ?"/>
-                        <md:PackIcon VerticalAlignment="Center" Kind="Register">
-                        </md:PackIcon>
-                    </StackPanel>
-                </Button>
-            </StackPanel>
         </Grid>
     </Grid>
 
