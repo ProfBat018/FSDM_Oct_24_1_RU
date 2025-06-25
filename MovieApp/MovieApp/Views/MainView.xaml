@@ -50,15 +50,15 @@
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Width="100" Grid.Row="1">
 
-            <Button Style="{StaticResource MaterialDesignFlatDarkButton}">
+            <Button Command="{Binding LoginPageCommand}" Style="{StaticResource MaterialDesignFlatDarkButton}">
                 <md:PackIcon Kind="Login"/>
             </Button>
 
-            <Button Style="{StaticResource MaterialDesignFlatDarkButton}">
+            <Button Command="{Binding RegisterPageCommand}" Style="{StaticResource MaterialDesignFlatDarkButton}">
                 <md:PackIcon Kind="Register"/>
             </Button>
         </StackPanel>
         
-        <ContentControl Content="{Binding CurrentView}" Grid.Row="2"/>
+        <ContentControl Content="{Binding CurrentView, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2"/>
     </Grid>
 </Window>

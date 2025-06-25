@@ -1,4 +1,5 @@
-﻿using MovieApp.Services.Abstractions;
+﻿using GalaSoft.MvvmLight.Messaging;
+using MovieApp.Services.Abstractions;
 using MovieApp.Services.Implementations;
 using MovieApp.ViewModels;
 using MovieApp.Views;
@@ -17,9 +18,11 @@ public partial class App : Application
     {
         Container.RegisterSingleton<IDataService, DataService>();
         Container.RegisterSingleton<IAccountService, AccountService>();
+        Container.RegisterSingleton<IMessenger, Messenger>();
 
         Container.RegisterSingleton<MainViewModel>();
         Container.RegisterSingleton<LoginViewModel>();
+        Container.RegisterSingleton<SearchViewModel>();
         Container.RegisterSingleton<RegisterViewModel>(); // var a = new RegisterViewModel()
 
         Container.Verify();

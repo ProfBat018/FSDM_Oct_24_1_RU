@@ -13,7 +13,6 @@ namespace MovieApp.Services.Implementations;
 
 class DataService : IDataService
 {
-
     public void AddData<T>(T data) where T : IEntity
     {
         List<T>? values = GetAllData<T>() as List<T>;
