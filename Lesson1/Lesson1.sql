@@ -9,6 +9,14 @@ CREATE TABLE Cars
     [Year] INT CHECK([Year] >= 1885 AND [Year] <= Year(GETUTCDATE()))
 );
 
+alter table Cars
+add VIN NVARCHAR(17) NULL;
+
+alter table Cars
+alter column VIN NVARCHAR(17) NOT NULL;
+
+create unique index IX_Cars_VIN on Cars(VIN);
+
 
 -- DML
 -- INSERT INTO Cars(Id, Make, Model) VALUES(1, N'Mercedes-Benz', N'S63 AMG');
