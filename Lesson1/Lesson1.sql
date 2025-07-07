@@ -17,7 +17,6 @@ alter column VIN NVARCHAR(17) NOT NULL;
 
 create unique index IX_Cars_VIN on Cars(VIN);
 
-
 -- DML
 -- INSERT INTO Cars(Id, Make, Model) VALUES(1, N'Mercedes-Benz', N'S63 AMG');
 -- INSERT INTO Cars(Id, M```ake) VALUES(1, N'Mercedes-Benz');
