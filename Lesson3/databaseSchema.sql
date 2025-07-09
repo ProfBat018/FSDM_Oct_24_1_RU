@@ -1,3 +1,5 @@
+create database Academy;
+
 create table People (
     [Id] int primary key identity(1, 1),
     [Name] nvarchar(30) not null,
