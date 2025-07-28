@@ -75,28 +75,15 @@ namespace CodeFirstApp.Migrations
 
             modelBuilder.Entity("CodeFirstApp.Data.Models.UserRole", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("FK_UserRoles_RoleId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("FK_UserRoles_UserId")
+                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("RoleId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("UserId", "RoleId");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("FK_UserRoles_RoleId");
-
-                    b.HasIndex("FK_UserRoles_UserId");
+                    b.HasIndex("RoleId");
 
                     b.ToTable("UserRoles");
                 });
@@ -105,11 +92,15 @@ namespace CodeFirstApp.Migrations
                 {
                     b.HasOne("CodeFirstApp.Data.Models.Role", "Role")
                         .WithMany("UserRoles")
-                        .HasForeignKey("FK_UserRoles_RoleId");
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("CodeFirstApp.Data.Models.User", "User")
                         .WithMany("UserRoles")
-                        .HasForeignKey("FK_UserRoles_UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Role");
 
