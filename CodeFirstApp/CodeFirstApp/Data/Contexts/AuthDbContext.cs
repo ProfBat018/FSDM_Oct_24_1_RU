@@ -1,7 +1,9 @@
 using System.Reflection;
 using CodeFirstApp.Data.Models;
+using CodeFirstApp.Services.Classes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 
 namespace CodeFirstApp.Data.Contexts;
@@ -16,10 +18,12 @@ public class AuthDbContext : DbContext
     {
     }
 
-    // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    // {
-    //     optionsBuilder.UseLazyLoadingProxies();
-    // }
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        var loggerFactpry = new LoggerFactory();
+        loggerFactpry.AddProvider(new MyLoggerProvider());
+        optionsBuilder.UseLoggerFactory(loggerFactpry);
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

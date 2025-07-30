@@ -85,8 +85,28 @@ using var context = new AuthDbContext(optionsBuilder.Options);
 //     Console.WriteLine(userRole.Role.Name);
 // }
 
-var role = context.Roles.FirstOrDefault(r => r.Name == "AppAdmin");
 
+// Задача, найти все миена пользователей с ролью AppAdmin 
+
+// Cпособ №1 Пойти вперед от таблицы UserRoles 
+// UserRole ==> Roles
+
+// var users = context.UserRoles
+//     .Include(ur => ur.User)
+//     .Include(ur => ur.Role)
+//     .Where(ur => ur.Role.Name == "AppAdmin")
+//     .Select(ur => ur.User.Name).ToList();
+
+
+// Способ 2. Сперва найти роль в БД, а потом всех пользователей с этой ролью 
+// UserRoles <== Roles 
+
+// 1. Нахожу роль в БД. 
+var role = context.Roles.FirstOrDefault(r => r.Name == "AppAdmin");
+var userRoles = context.UserRoles
+    .Where(ur => ur.RoleId == role.Id);
+
+// 2. Подгружаю все UserRoles которые есть по этой роли. 
 context.Entry(role).Collection(r => r.UserRoles).Load();
 
 foreach (var userRole in role.UserRoles)
